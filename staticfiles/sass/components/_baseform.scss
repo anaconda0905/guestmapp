@@ -1,0 +1,51 @@
+@mixin auth-modal{
+	justify-content: center;
+    align-items: center;
+    display: none;
+	&.show{
+		padding-right: 0px !important;
+    	display: flex!important;
+	}
+	.modal-body{
+		position: relative;
+		background: #EEF1F3;
+		border-radius: 4px;
+		padding: 27px 28px 85px 27px;
+
+		.close{
+			color: #FF0000;
+			font-size: 35px;
+		}
+
+		p{
+			@include base-paragraph;
+			color: #3B4A54;
+			text-align: center;
+		}
+
+		a{
+			text-decoration: underline;
+		}
+
+		@media only screen and (max-width: 420px) {
+			padding: 20px;
+			p{
+				font-size: 15px;
+			}
+		}
+
+		.loader{
+			display: none;
+			width: 30px;
+			height: 30px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -13px;
+			margin-left: -13px;
+			border-radius: 60px;
+			animation: loader 0.8s linear infinite;
+			-webkit-animation: loader 0.8s linear infinite;
+		}
+	}
+}

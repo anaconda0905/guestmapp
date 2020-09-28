@@ -1,0 +1,102 @@
+[
+    {
+        "model": "hometype.hometype",
+        "pk": 1,
+        "fields": {
+            "title": "TRAVEL TRAILER",
+            "image": "hometype/1.png",
+            "model": "1",
+            "manufacture": "1"
+        }
+    },
+    {
+        "model": "hometype.hometype",
+        "pk": 2,
+        "fields": {
+            "title": "TOY HAULER",
+            "image": "hometype/2.png",
+            "model": "2",
+            "manufacture": "2"
+        }
+    },
+    {
+        "model": "hometype.hometype",
+        "pk": 3,
+        "fields": {
+            "title": "FIFTH WHEEL TRAILER",
+            "image": "hometype/3.png",
+            "model": "3",
+            "manufacture": "3"
+        }
+    },
+    {
+        "model": "hometype.hometype",
+        "pk": 4,
+        "fields": {
+            "title": "CLASS A MOTORHOME",
+            "image": "hometype/4.png",
+            "model": "4",
+            "manufacture": "4"
+        }
+    },
+    {
+        "model": "hometype.hometype",
+        "pk": 5,
+        "fields": {
+            "title": "CLASS C MOTORHOME",
+            "image": "hometype/5.png",
+            "model": "5",
+            "manufacture": "5"
+        }
+    },
+    {
+        "model": "hometype.hometype",
+        "pk": 6,
+        "fields": {
+            "title": "CLASS B MOTORHOME",
+            "image": "hometype/6.png",
+            "model": "6",
+            "manufacture": "6"
+        }
+    },
+    {
+        "model": "hometype.hometype",
+        "pk": 7,
+        "fields": {
+            "title": "TRUCK CAMPER",
+            "image": "hometype/7.png",
+            "model": "7",
+            "manufacture": "7"
+        }
+    },
+    {
+        "model": "hometype.hometype",
+        "pk": 8,
+        "fields": {
+            "title": "HYBRID TRAVEL TRAILER",
+            "image": "hometype/8.png",
+            "model": "8",
+            "manufacture": "8"
+        }
+    },
+    {
+        "model": "hometype.hometype",
+        "pk": 9,
+        "fields": {
+            "title": "TENT CAMPING TRAILER",
+            "image": "hometype/9.png",
+            "model": "9",
+            "manufacture": "9"
+        }
+    },
+    {
+        "model": "hometype.hometype",
+        "pk": 10,
+        "fields": {
+            "title": "PARK MODEL TRAILER",
+            "image": "hometype/10.png",
+            "model": "10",
+            "manufacture": "10"
+        }
+    }
+]

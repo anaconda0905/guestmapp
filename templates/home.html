@@ -1,0 +1,673 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block main %}
+
+<!-- Header Section Begin -->
+<header class="header-section">
+    <div class="header__info">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__info-left">
+                        <ul>
+                            <li><a href="#advantage__section">Benefits</a></li>
+                            <li><a href="#featured__section">Featured listings</a></li>
+                            <li><a href="#easystep__section">3 Easy steps</a></li>
+                            <li><a href="#pricing__section">Pricing</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__info-right">
+                        {% if user.is_authenticated %}
+                            <div class="btn-group">
+                                <button type="button" class="btn guest-dropdown-btn dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                                    <img class="mr-10" src="{% static 'img/user-avatar.png' %}">{{user}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                                    <a class="dropdown-item" href="#">My Profile</a>
+                                    <a class="dropdown-item" href="#">Notifications</a>
+                                    <a class="dropdown-item" href="#">Settings</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{% url 'ajax_logout' %}">Logout</a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="login-wrapper">
+                                <img src="{% static 'img/user-avatar.png' %}">
+                                <a class="guest-dropdown-btn" href="#" onclick="doLogin()">Login</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header End -->
+
+<!-- Hero Section Begin -->
+<section class="hero-section">
+    <!-- <div class="hero__slider owl-carousel"> -->
+    {% comment %}
+    <div class="hero__item set-bg" data-setbg="{% static 'img/hero/hero-1.png' %}"> {% endcomment %}
+        <div class="hero__item set-bg" data-setbg="{% static 'img/hero/hero-1.svg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="hero__text">
+                            <div class="header__logo">
+                                <div class="row">
+                                    <a href="{% url 'home' %}">
+                                        <img class="site-logo" src="{% static 'img/logo.png' %}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="canvas__open">
+                                <img src="{% static 'img/menu.png' %}">
+                            </div>
+                            <div class="user__login">
+                                <img src="{% static 'img/user-avatar.png' %}" onclick="doLogin()">
+                            </div>
+                            <h1 class="header-h1 mt-15">The Perfect Floorplan for your Guest</h1>
+                            <div class="main-summary">
+                                <h4 class="header-h4 mt-15">Order a floor plan to save time, increase ratings and stand
+                                    out from your competition</h4>
+
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'ownguestmapp' %}" class="btn green-btn mt-36">Get yours now</a>
+                                {% else %}
+                                    <a href="#" class="btn green-btn mt-36" onclick="doLogin()">
+                                        Get yours now
+                                    </a>
+                                {% endif %}
+
+                                <div class="hero__img mt-37">
+                                    <img src="{% static 'img/man.png' %}" alt="">
+                                    <div class="hero__comment__text">
+                                        <span class="img-comment">This service is great for real estate agents, airbnb hosts, transportation rentals, buying and selling, and home owners</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+</section>
+<!-- Hero Section End -->
+
+<!-- Register Domain Section Begin -->
+<section class="advantage-section spad" id="advantage__section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="section-title">Why create a Guestmapp?</h1>
+            </div>
+        </div>
+        <div class="row mt-84">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+                <div class="advantage-card-item">
+                    <img src="{% static 'img/clock.gif' %}" alt="">
+                    <h3 class="header-h3 mt-63">Save time</h3>
+                    <p class="paragraph mt-23">
+                        Reduce pointless back and forths by allowing your guests to know exactly where things are and
+                        how things work
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+                <div class="advantage-card-item">
+                    <img src="{% static 'img/cal.gif' %}" alt="">
+                    <h3 class="header-h3 mt-63">Lower vacancies</h3>
+                    <p class="paragraph mt-23">
+                        Attract more guests, earning your more money
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+                <div class="advantage-card-item">
+                    <img src="{% static 'img/star.gif' %}" alt="">
+                    <h3 class="header-h3 mt-63">Increase ratings</h3>
+                    <p class="paragraph mt-23">
+                        Attain higher ratings in the accuracy, communication, and value categories on Airbnb
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+                <div class="advantage-card-item">
+                    <img src="{% static 'img/stand.gif' %}" alt="">
+                    <h3 class="header-h3 mt-63">Stand out</h3>
+                    <p class="paragraph mt-23">
+                        The perfect addition to your Marketing strategy
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Register Domain Section End -->
+
+<section class="recent-guestmapp-section spad" id="featured__section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="section-title">Recent Guestmapps</h1>
+            </div>
+        </div>
+        <div class="row mt-40">
+            <div class="testimonial__slider owl-carousel">
+                <div class="col-lg-4">
+                    <div class="testimonial__item">
+                        <img src="{% static 'img/carousel/carousel-1.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial__item">
+                        <img src="{% static 'img/carousel/carousel-2.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial__item">
+                        <img src="{% static 'img/carousel/carousel-3.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial__item">
+                        <img src="{% static 'img/carousel/carousel-1.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial__item">
+                        <img src="{% static 'img/carousel/carousel-2.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial__item">
+                        <img src="{% static 'img/carousel/carousel-3.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial__item">
+                        <img src="{% static 'img/carousel/carousel-1.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial__item">
+                        <img src="{% static 'img/carousel/carousel-2.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial__item">
+                        <img src="{% static 'img/carousel/carousel-3.png' %}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center mt-40">
+            <div class="col-lg-4">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'ownguestmapp' %}" class="btn green-btn mt-36">Get yours now</a>
+                {% else %}
+                    <a href="#" class="btn green-btn mt-36" onclick="doLogin()">
+                        Get yours now
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="easy-step-section spad" id="easystep__section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="section-title mt-42">3 Easy steps</h1>
+            </div>
+        </div>
+        <div class="row mt-68">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                <div class="advantage-card-item">
+                    <img src="{% static 'img/scan.gif' %}" alt="">
+                    <h3 class="header-h3 mt-40">Scan</h3>
+                    <p class="paragraph mt-23">
+                        Scan your Home with the Guestmapp App on your mobile device. Option to upload your own blueprint
+                        if you prefer to skip scan.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                <div class="advantage-card-item">
+                    <img src="{% static 'img/upload.gif' %}" alt="">
+                    <h3 class="header-h3 mt-40">Upload</h3>
+                    <p class="paragraph mt-23">
+                        Upload Photos of your Home
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                <div class="advantage-card-item">
+                    <img src="{% static 'img/finalize.gif' %}" alt="">
+                    <h3 class="header-h3 mt-40">Finalize</h3>
+                    <p class="paragraph mt-23">
+                        Receive your finished product<br/>
+                        One Free touch up request
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section Begin -->
+<section class="pricing-section" id="pricing__section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <h1 class="section-title">Prices</h1>
+                <h4 class="header-h4 mt-15 ta-center" style="color: #414F5F;">Please select a product</h4>
+            </div>
+        </div>
+        <div class="row mt-23">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="pricing-header d-flex justify-content-center set-bg" data-setbg="static/img/pricing-bk.png">
+                    <span class="header-pricing-title">Blueprint</span>
+                </div>
+                <div class="d-flex flex-column justify-content-between">
+                    <div class="pricing__item">
+                        <img src="{% static 'img/floorplan-1.png' %}" alt="">
+                        <h3 class="price ta-left">${{prices.0.price}}</h3>
+                        <h4 class="header-h4">Features</h4>
+                        <ul>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Accurate representation of your home's floor-plan, hassle-free, using your own mobile
+                                device
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                This plan included the measurements of your home
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                This plan included the measurements of your home
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Product will be ready in 24-72 hours
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Blueprint is builder style realistic
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Format will be given in PDF, JPG
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-btn-wrapper">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'planprices' %}" class="btn green-btn">Order now</a>
+                        {% else %}
+                        <a href="#" class="btn green-btn" onclick="doLogin()">Order now</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="pricing-header d-flex justify-content-center set-bg" data-setbg="static/img/pricing-bk.png">
+                    <span class="header-pricing-title">Theme 3D staging</span>
+                </div>
+                <div class="d-flex flex-column justify-content-between">
+                    <div class="pricing__item">
+                        <img src="{% static 'img/floorplan-2.png' %}" alt="">
+                        <h3 class="price ta-left">${{prices.1.price}}</h3>
+                        <h4 class="header-h4">Features</h4>
+                        <ul>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Please <a href="#" style="text-decoration: underline;">select from the three themes</a>
+                                that we offer so we can cater your home to this style (please provide a blueprint) as
+                                well as any additional pictures of your furniture. (e.g airbnb listing or MLS listing).
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                This is a 3D floor model, hand made and designed by by our design team targeted towards
+                                airbnb hosts
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Revisions are limited to only errors by designer and if specifications are not exact
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                4K resolution
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Format will be given in PDF, JPG
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-btn-wrapper">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'planprices' %}" class="btn green-btn">Order now</a>
+                        {% else %}
+                        <a href="#" class="btn green-btn" onclick="doLogin()">Order now</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="pricing-header d-flex justify-content-center set-bg" data-setbg="static/img/pricing-bk.png">
+                    <span class="header-pricing-title">Custom interior design 3D</span>
+                </div>
+                <div class="d-flex flex-column justify-content-between">
+                    <div class="pricing__item">
+                        <img src="{% static 'img/floorplan-3.png' %}" alt="">
+                        <h3 class="price ta-left">${{prices.2.price}}</h3>
+                        <h4 class="header-h4">Features</h4>
+                        <ul>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Fully customizable based on your blueprint and pictures that were provided
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                The style of the guestmapp will be tailored to textures, colours and designs specific to
+                                the pictures provided
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Targeted for real estate agents.
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Revisions are limited to only errors by designer and if specifications are not exact
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Photo-realistic
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                4K resolution
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Format will be given in PDF, JPG
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-btn-wrapper">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'planprices' %}" class="btn green-btn">Order now</a>
+                        {% else %}
+                        <a href="#" class="btn green-btn" onclick="doLogin()">Order now</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="pricing-header d-flex justify-content-center set-bg" data-setbg="static/img/pricing-bk.png">
+                    <span class="header-pricing-title">Custom 3D mobile home</span>
+                </div>
+                <div class="d-flex flex-column justify-content-between">
+                    <div class="pricing__item">
+                        <img src="{% static 'img/floorplan-4.png' %}" alt="">
+                        <h3 class="price ta-left">${{prices.3.price}}</h3>
+                        <h4 class="header-h4">Features</h4>
+                        <ul>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Fully customizable, based on your blueprint (please provide your own blueprint as well
+                                as additional pictures to display furniture (e.g., mobile home listing)
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                This is a 3d floor plan, made by a high quality custom made software designed to provide
+                                a realistic interior design of your mobile home
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Mobile-home rental businesses
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Revisions are limited to only errors by designer and if specifications are not exact.
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Photo-realistic
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                4K resolution
+                            </li>
+                            <li style="list-style-image: url('static/img/list-check.png');">
+                                Format will be given in PDF, JPG
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-btn-wrapper">
+                        <div class="order-btn-wrapper">
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'planprices' %}" class="btn green-btn">Order now</a>
+                            {% else %}
+                            <a href="#" class="btn green-btn" onclick="doLogin()">Order now</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Pricing Section End -->
+
+<section class="summary-section spad">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-4 col-md-4">
+                <a href="#" class="btn green-reverse-btn">
+                    Contact us for large scale orders
+                </a>
+                <h4 class="mt-36 ta-center">
+                    Join the thousands of users and companies already using guestmapp:
+                </h4>
+                <span>10,000+</span>
+                <h5 class="header-h5">floorplans created</h5>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock main %}
+
+{% block script %}
+<div class="modal" id="modal_form_order_step1" role="dialog" data-keyboard="false" data-backdrop="static"
+     style="display: none;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <form action="#" id="form" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="form-body">
+                            <div class="form-group">
+                                <!-- <span class="fa fa-arrow-left back-btn" onclick="doLogin()"></span> -->
+                                <label class="modal-title">Order</label>
+                                <p class="paragraph mt-30 ta-left">
+                                    <span style="font-weight: bold">Step 1 from 2</span>
+                                    Create an account
+                                </p>
+                                <div class="modal-input-group mt-20">
+                                    <label class="modal-input-label">Name</label>
+                                    <input name="title" placeholder="name" class="form-control" type="text">
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Surname</label>
+                                    <input name="title" placeholder="surname" class="form-control" type="text">
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Your email</label>
+                                    <input name="title" placeholder="Email" class="form-control" type="text">
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Your password</label>
+                                    <input name="title" placeholder="password" class="form-control" type="text">
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Confirm password</label>
+                                    <input name="title" placeholder="password" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn green-btn mt-40" data-dismiss="modal" aria-label="Close"
+                                onclick="doOrderStep2()"><span aria-hidden="true">Next</span></button>
+                    </form>
+                    <p class="mt-15">If you already have an account, please <a href="#" onclick="doLogin()">login</a>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <p>Or log in with</p>
+                    <div class="mt-15">
+                        <a class="mr-10" onclick=""><img src="{% static 'img/google.png' %}"></a>
+                        <a class="ml-10" onclick=""><img src="{% static 'img/facebook.png' %}"></a>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</div>
+
+<!-- Bootstrap modal -->
+<div class="modal" id="modal_form" data-keyboard="false" data-backdrop="static" role="dialog">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <form action="#" id="login-form" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="modal-title">Login</label>
+                                <div class="modal-input-group mt-36">
+                                    <label class="modal-input-label">Your email</label>
+                                    <input id="email" name="email" placeholder="Email" class="form-control"
+                                           type="email">
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Your password</label>
+                                    <input id="password" name="password" placeholder="password" class="form-control"
+                                           type="password">
+                                </div>
+                            </div>
+                            <div class="alert alert-danger" id="alert-div">
+                                <button id="msg-btn" type="button" class="close">&times;</button>
+                            </div>
+                        </div>
+                        <button type="submit" id="login-btn" class="btn green-btn mt-40">Login<span
+                                class="loader"></span></button>
+                    </form>
+                    <p class="mt-15">If you forgot your password, <a href="/reset">click here</a></p>
+                    <p><a href="#" onclick="doSignup()">Create a new account</a></p>
+                </div>
+                <div class="modal-footer">
+                    <p>Or log in with</p>
+                    <div class="mt-15">
+                        <a class="mr-10" onclick=""><img src="{% static 'img/google.png' %}"></a>
+                        <a class="ml-10" onclick=""><img src="{% static 'img/facebook.png' %}"></a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    </div><!-- /.modal -->
+</div>
+<!-- Signup modal -->
+<div class="modal" id="modal_form_signup" data-keyboard="false" data-backdrop="static" role="dialog" style="display: none;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <form action="#" id="signup-form" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="form-body">
+                            <div class="form-group">
+                                <span class="fa fa-arrow-left back-btn" onclick="doLogin()"></span>
+                                <label class="modal-title ml-20">Create account</label>
+                                <div class="modal-input-group mt-10">
+                                    <label class="modal-input-label">First and Last name</label> 
+                                    <input id="signup_name" name="signup_name" placeholder="Name" class="form-control" type="text">
+                                </div>                                    
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Your email</label> 
+                                    <input id="signup_email" name="signup_email" placeholder="Email" class="form-control" type="email">
+                                </div>                                    
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Your password</label> 
+                                    <input id="signup_password" name="signup_password" placeholder="Password" class="form-control" type="password">
+                                </div>                                    
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Confirm password</label> 
+                                    <input id="signup_cfm_password" name="signup_cfm_password" placeholder="Confirm password" class="form-control" type="password">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" id="alert-div">
+                            <button id="msg-btn" type="button" class="close">&times;</button>
+                        </div>
+                        <button type="submit" class="btn green-btn mt-30" aria-label="Close" id="signup-btn">Next<span
+                            class="loader"></span></button>
+                    </form>
+                    <p class="mt-15">If you already have an account, please <a href="#" onclick="doLogin()">login</a></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p>Or log in with</p>
+                <div class="mt-15">
+                    <a class="mr-10" onclick=""><img src="{% static 'img/google.png' %}"></a>
+                    <a class="ml-10" onclick=""><img src="{% static 'img/facebook.png' %}"></a>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- Signup modal -->
+<div class="modal" id="modal_form_resetpassword" data-keyboard="false" data-backdrop="static" role="dialog"
+     style="display: none;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <form action="#" id="form" class="form-horizontal">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <span class="fa fa-arrow-left back-btn" onclick="goLogin()"></span>
+                                <label class="modal-title ml-20">Password recovery</label>
+                                <div class="modal-input-group mt-74">
+                                    <label class="modal-input-label">Your email</label>
+                                    <input name="title" placeholder="Email" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn green-btn mt-40">Recover password</button>
+                    </form>
+                    <p class="mt-15">Go back to&nbsp;<a href="#" onclick="goLogin()">login page</a></p>
+                </div>
+                <div class="modal-footer">
+                    <p>Or log in with</p>
+                    <div class="mt-15">
+                        <a class="mr-10" onclick=""><img src="{% static 'img/google.png' %}"></a>
+                        <a class="ml-10" onclick=""><img src="{% static 'img/facebook.png' %}"></a>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</div>
+<!-- /.modal -->
+<script src="{% static 'js/auth.js' %}"></script>
+<script>
+    $('.pricing__item').on('click', function () {
+        var isLoggedin = '{{user.is_authenticated}}';
+        if (isLoggedin == 'True') {
+            document.location.href = "/planprices";
+        } else {
+            doLogin();
+        }
+    });
+</script>
+{% endblock script %}

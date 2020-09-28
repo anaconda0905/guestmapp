@@ -1,0 +1,42 @@
+[
+  {
+    "model": "price.price",
+    "pk": 1,
+    "fields": {
+      "title": "Blueprint",
+      "price": 49.99,
+      "old_price": 49.99,
+      "unit": "home"
+    }
+  },
+  {
+    "model": "price.price",
+    "pk": 2,
+    "fields": {
+      "title": "Theme 3D staging",
+      "price": 84.99,
+      "old_price": 84.99,
+      "unit": "floor"
+    }
+  },
+  {
+    "model": "price.price",
+    "pk": 3,
+    "fields": {
+      "title": "Custom interior design 3D",
+      "price": 99.99,
+      "old_price": 99.99,
+      "unit": "floor"
+    }
+  },
+  {
+    "model": "price.price",
+    "pk": 4,
+    "fields": {
+      "title": "Theme 3D mobile home",
+      "price": 74.99,
+      "old_price": 74.99,
+      "unit": "vehicle"
+    }
+  }
+]

@@ -1,0 +1,77 @@
+{% extends 'baseaccount.html' %}
+
+{% load static %}
+
+
+{% block main %}
+
+<!-- Hero Section Begin -->
+<section class="pricing-hero-section" style="background-color: #FFFFFF;">
+    <!-- <div class="hero__slider owl-carousel"> -->
+    <div class="set-bg" data-setbg="{% static 'img/hero/pwd-bk.png' %}">
+        <div class="container">
+            <div class="header__logo">
+                <div class="row">
+                    <a href="{% url 'home' %}"><img class="site-logo" src="{% static 'img/logo.png' %}" alt=""></a>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <img src="{% static 'img/menu.png' %}">
+            </div>
+            <div class="user__login">
+                <img src="{% static 'img/user-avatar.png' %}" onclick="doLogin()">
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+</section>
+<!-- Hero Section End -->
+
+<section class="own-guestmapp-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-md-5">
+                <h1 class="header-h4 ta-center" style="color: #679724;">Hello {{user}}</h4>
+                    <h1 class="section-title mt-40">Your Guestmapps</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <table class="table custom-table custom-table-striped mt-30">
+                    <tbody>
+                    <tr class="custom-table-header">
+                        <th>Project Name</th>
+                        <th>Date of scan</th>
+                        <th></th>
+                    </tr>
+                    {% for order in orders %}
+                    <tr>
+                        <td class="custom-table-content">
+                            <img src="/static/img/{{order.productImage}}.png" class="mr-10">
+                            <span>{{order.getProjectTitle}}</span>
+                        </td>
+                        <td>
+                            {{order.completed_date}}
+                        </td>
+                        <td class="download-plan">
+                            <img src="{% static 'img/download.png' %}"><a href="#">Download</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-40 mb-80">
+            <div class="all-guestmapps">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <a href="{% url 'guestmapp' %}">Go back to account page</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main %}
+
+{% block script %}
+{% endblock script %}

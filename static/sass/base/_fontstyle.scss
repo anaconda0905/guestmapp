@@ -1,0 +1,132 @@
+      // Desktop Styles
+@mixin base-h1{
+	font-family: Roboto Slab;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 48px;
+	line-height: 54px;
+} 
+@mixin base-h2 {
+	font-family: Roboto Slab;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 30px;
+	line-height: 40px;
+}
+@mixin base-h3 {
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 28px;
+	line-height: 33px;
+}
+@mixin base-h4 {
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 23px;	
+}
+@mixin base-h5 {
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 24px;
+	line-height: 28px;
+}
+@mixin base-paragraph{
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 26px;
+}
+@mixin base-section {
+	font-family: Roboto Slab;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 36px;
+	line-height: 40px;
+}
+.header-h1 {
+	@include base-h1;
+	color: $color-white;
+	word-break: break-word;
+}                    
+.header-h2 {
+	@include base-h2;
+	color: #3B4A54;
+}
+.header-h3 {
+	@include base-h3;
+	color: #3B4A54;
+	@media only screen and (max-width: 767px) {
+		font-size: 22px;
+		line-height: 26px;
+	}
+}
+.header-h4 {
+	@include base-h4;
+	color: $color-white;
+	@media only screen and (max-width: 767px) {
+		font-size: 16px;
+		line-height: 19px;
+		color: #3B4A54;
+	}
+}
+.header-h4-normal {
+	@include base-h4;
+	color: $color-white;
+	font-weight: normal;
+	@media only screen and (max-width: 767px) {
+		font-size: 14px;
+		line-height: 20px;
+		color: #3B4A54;
+	}
+}
+.header-h5 {
+	@include base-h5;
+	text-align: center;
+	color: #136CAD;
+}
+.header-pricing-title {
+	font-family: Roboto Slab;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 26px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	margin-top: 25px;
+	color: $color-white;
+}
+
+.paragraph {
+	@include base-paragraph;
+	color: #3B4A54;
+	@media only screen and (max-width: 767px) {
+		font-size: 14px;
+		line-height: 20px;
+	}
+}
+.img-comment {
+	font-family: Roboto;
+	font-style: italic;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 19px;
+
+	/* gray extra dark */
+
+	color: $color-gray-extra-dark;
+}
+.section-title {
+	@include base-section;
+	color: #3B4A54;
+
+	@media only screen and (max-width: 767px) {
+		font-size: 26px;
+		line-height: 28px;
+	}
+}

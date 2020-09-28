@@ -1,0 +1,290 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE  -->
+{% block stylesheets %}
+<script>
+    var month_orders = JSON.parse('{{ month_orders | escapejs }}');
+</script>
+{% endblock stylesheets %}
+
+{% block content %}
+<h3 class="page-heading mb-4">Dashboard</h3>
+<div class="row gap-20 masonry pos-r">
+    <div class="masonry-sizer col-md-6"></div>
+
+    <div class="masonry-item w-100">
+        <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-4">
+                <div class="card card-statistics">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <h4 class="text-danger">
+                                    <i class="fa fa-bar-chart-o highlight-icon" aria-hidden="true"></i>
+                                </h4>
+                            </div>
+                            <div class="float-right">
+                                <p class="card-text text-dark">Visitors</p>
+                                <h4 class="bold-text">{{users_count}}</h4>
+                            </div>
+                        </div>
+                        <p class="text-muted">
+                            <i class="fa fa-exclamation-circle mr-1" aria-hidden="true"></i> 65% lower growth
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-4">
+                <div class="card card-statistics">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <h4 class="text-warning">
+                                    <i class="fa fa-shopping-cart highlight-icon" aria-hidden="true"></i>
+                                </h4>
+                            </div>
+                            <div class="float-right">
+                                <p class="card-text text-dark">Orders</p>
+                                <h4 class="bold-text">{{orders_count}}</h4>
+                            </div>
+                        </div>
+                        <p class="text-muted">
+                            <i class="fa fa-bookmark-o mr-1" aria-hidden="true"></i> Product-wise sales
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-4">
+                <div class="card card-statistics">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <h4 class="text-success">
+                                    <i class="fa fa-dollar highlight-icon" aria-hidden="true"></i>
+                                </h4>
+                            </div>
+                            <div class="float-right">
+                                <p class="card-text text-dark">Revenue</p>
+                                <h4 class="bold-text">${{total_payout}}</h4>
+                            </div>
+                        </div>
+                        <p class="text-muted">
+                            <i class="fa fa-calendar mr-1" aria-hidden="true"></i> Total Sales
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-4">
+                <div class="card card-statistics">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left">
+                                <h4 class="text-primary">
+                                    <i class="fa fa-twitter highlight-icon" aria-hidden="true"></i>
+                                </h4>
+                            </div>
+                            <div class="float-right">
+                                <p class="card-text text-dark">Followers</p>
+                                <h4 class="bold-text">+62,500</h4>
+                            </div>
+                        </div>
+                        <p class="text-muted">
+                            <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Just Updated
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="masonry-item col-md-6">
+        <!-- #Monthly Stats ==================== -->
+        <div class="bd bgc-white">
+            <div class="layers">
+                <div class="layer w-100 pX-20 pT-20">
+                    <h6 class="lh-1">Monthly Sales</h6>
+                </div>
+                <div class="layer w-100 p-20">
+                    <canvas id="line-chart" height="220"></canvas>
+                </div>
+                <input type="hidden" id="month_orders_hidden" value="">
+                <div class="layer bdT p-20 w-100">
+                    <div class="peers ai-c jc-c gapX-20">
+                        <div class="peer">
+                            <span class="fsz-def fw-600 mR-10 c-grey-800">10% <i class="fa fa-level-up c-green-500"></i></span>
+                            <small class="c-grey-500 fw-600">APPL</small>
+                        </div>
+                        <div class="peer fw-600">
+                            <span class="fsz-def fw-600 mR-10 c-grey-800">2% <i class="fa fa-level-down c-red-500"></i></span>
+                            <small class="c-grey-500 fw-600">Average</small>
+                        </div>
+                        <div class="peer fw-600">
+                            <span class="fsz-def fw-600 mR-10 c-grey-800">15% <i class="fa fa-level-up c-green-500"></i></span>
+                            <small class="c-grey-500 fw-600">Sales</small>
+                        </div>
+                        <div class="peer fw-600">
+                            <span class="fsz-def fw-600 mR-10 c-grey-800">8% <i class="fa fa-level-down c-red-500"></i></span>
+                            <small class="c-grey-500 fw-600">Profit</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="masonry-item col-md-6">
+        <div class="bd bgc-white p-20">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Orders</h5>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-4">
+                                <p class="card-text text-muted mb-2">Pending orders
+                                    <span style="float: right">{{pending_orders}}%</span>
+                                </p>
+                                <div class="progress progress-slim">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{pending_orders}}%"
+                                         aria-valuenow="{{pending_orders}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <p class="card-text text-muted mb-2">Ready orders
+                                    <span style="float: right">{{ready_orders}}%</span>
+                                </p>
+                                <div class="progress progress-slim">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ready_orders}}%"
+                                         aria-valuenow="{{ready_orders}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <p class="card-text text-muted mb-2">Working orders
+                                    <span style="float: right">{{working_orders}}%</span>
+                                </p>
+                                <div class="progress progress-slim">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{working_orders}}%"
+                                         aria-valuenow="{{working_orders}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <p class="card-text text-muted mb-2">Cancelled orders
+                                    <span style="float: right">{{cancelled_orders}}%</span>
+                                </p>
+                                <div class="progress progress-slim">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{cancelled_orders}}%"
+                                         aria-valuenow="{{cancelled_orders}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <p class="card-text text-muted mb-2">Completed orders
+                                    <span style="float: right">{{completed_orders}}%</span>
+                                </p>
+                                <div class="progress progress-slim">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: {{completed_orders}}%"
+                                         aria-valuenow="{{completed_orders}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <p class="card-text text-muted mb-2">Confirmed orders
+                                    <span style="float: right">{{confirmed_orders}}%</span>
+                                </p>
+                                <div class="progress progress-slim">
+                                    <div class="progress-bar bg-inverse" role="progressbar" style="width:{{confirmed_orders}}%"
+                                         aria-valuenow="{{confirmed_orders}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="masonry-item col-md-6">
+        <!-- #Sales Report ==================== -->
+        <div class="bd bgc-white">
+            <div class="layers">
+                <div class="layer w-100 p-20">
+                    <h6 class="lh-1">Sales Report</h6>
+                </div>
+                <div class="layer w-100">
+                    <div class="bgc-light-blue-500 c-white p-20">
+                        <div class="peers ai-c jc-sb gap-40">
+                            <div class="peer peer-greed">
+                                <h5>{{cur_year}}. {{cur_month}}</h5>
+                                <p class="mB-0">Sales Report</p>
+                            </div>
+                            <div class="peer">
+                                <h3 class="text-right">${{cur_month_payout}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive p-20">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="bdwT-0">Name</th>
+                                <th class="bdwT-0">Status</th>
+                                <th class="bdwT-0">Date</th>
+                                <th class="bdwT-0">Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders_month %}
+                            <tr>
+                                <td class="fw-600">{{ order.productTitle}}</td>
+                                <td>
+                                    {% if order.status == 0 %}
+                                    <span class="badge bgc-red-50 c-red-700 p-10 lh-0 tt-c badge-pill">
+                                        {{order.orderStatus}}
+                                    </span>
+                                    {% elif order.status == 1 %}
+                                    <span class="badge bgc-deep-purple-50 c-deep-purple-700 p-10 lh-0 tt-c badge-pill">
+                                        {{order.orderStatus}}
+                                    </span>
+                                    {% elif order.status == 2 %}
+                                    <span class="badge bgc-pink-50 c-pink-700 p-10 lh-0 tt-c badge-pill">
+                                        {{order.orderStatus}}
+                                    </span>
+                                    {% elif order.status == 3 %}
+                                    <span
+                                        class="badge bgc-green-50 c-green-700 p-10 lh-0 tt-c badge-pill">
+                                        {{order.orderStatus}}
+                                    </span>
+                                    {% elif order.status == 4 %}
+                                    <span class="badge bgc-yellow-50 c-yellow-700 p-10 lh-0 tt-c badge-pill">
+                                        {{order.orderStatus}}
+                                    </span>
+                                    {% elif order.status == 5 %}
+                                    <span class="badge bgc-orange-50 c-orange-700 p-10 lh-0 tt-c badge-pill">
+                                        {{order.orderStatus}}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>{{order.created_at}}</td>
+                                <td><span class="text-success">${{order.get_price}}</span></td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="ta-c bdT w-100 p-20">
+                <a href="{% url 'all_orders' %}">Check all the sales</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    // set json object string html tag
+    // $('#month_orders_hidden').val(JSON.stringify(month_orders));
+</script>
+{% endblock javascripts %}

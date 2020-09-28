@@ -1,0 +1,13 @@
+Django==3.0.8
+Pillow==7.2.0
+asgiref==3.2.10
+django-versatileimagefield==2.0
+djangorestframework==3.11.0
+django-widget-tweaks==1.4.8
+Markdown==3.2.2
+mysqlclient==2.0.1
+python-magic==0.4.18
+pytz==2020.1
+libmagic==1.0
+stripe==2.25.0
+python-decouple==3.3

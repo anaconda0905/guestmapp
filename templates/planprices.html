@@ -1,0 +1,452 @@
+{% extends 'baseaccount.html' %}
+
+{% load static %}
+{% load getprice %}
+
+{% block main %}
+
+<!-- Hero Section Begin -->
+<section class="pricing-hero-section">
+    <!-- <div class="hero__slider owl-carousel"> -->
+    <div class="set-bg" data-setbg="{% static 'img/hero/pwd-bk.png' %}">
+        <div class="container">
+            <div class="header__logo">
+                <div class="row">
+                    <a href="/"><img class="site-logo" src="{% static 'img/logo.png' %}" alt=""></a>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <img src="{% static 'img/menu.png' %}">
+            </div>
+            <div class="user__login">
+                <img src="{% static 'img/user-avatar.png' %}" onclick="doLogin()">
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+</section>
+<!-- Hero Section End -->
+
+<!-- Pricing Section Begin -->
+<section class="pricing-section spad-md">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <h4 class="header-h4 ta-center" style="color: #679724;">Hello {{user}}</h4>
+                {% if order_exist == false %}
+                <h1 class="section-title mt-40">You haven't purchased any floorplans yet,<br/>Please select a product</h1>
+                {% endif %}
+                <h4 class="header-h4 mt-40 ta-center" style="color: #414F5F;">Please select a product</h4>
+            </div>
+        </div>
+        <div class="row mt-23">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="pricing-header d-flex justify-content-center set-bg"
+                     data-setbg="{% static 'img/pricing-bk.png' %}">
+                    <span class="header-pricing-title">Blueprint</span>
+                </div>
+                <div class="d-flex flex-column justify-content-between">
+                    <div class="pricing__item" onclick="showOrderStep2()">
+                        <img src="{% static 'img/floorplan-1.png' %}" alt="">
+                        <h3 class="price ta-left">${{prices.0.price}}</h3>
+                        <h4 class="header-h4">Features</h4>
+                        <ul>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Accurate representation of your home's floor-plan, hassle-free, using your own mobile
+                                device
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                This plan included the measurements of your home
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                This plan included the measurements of your home
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Product will be ready in 24-72 hours
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Blueprint is builder style realistic
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Format will be given in PDF, JPG
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-btn-wrapper">
+                        <a href="#" class="btn green-btn" onclick="showOrderStep2()">Order now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="pricing-header d-flex justify-content-center set-bg"
+                     data-setbg="{% static 'img/pricing-bk.png' %}">
+                    <span class="header-pricing-title">Theme 3D staging</span>
+                </div>
+                <div class="d-flex flex-column justify-content-between">
+                    <div class="pricing__item" onclick="showOrderStep2()">
+                        <img src="{% static 'img/floorplan-2.png' %}" alt="">
+                        <h3 class="price ta-left">${{prices.1.price}}</h3>
+                        <h4 class="header-h4">Features</h4>
+                        <ul>
+                            <li style="list-style-image: url('{% static 'img/list-check.png' %}');">
+                                Please <a href="#" style="text-decoration: underline;">select from the three themes</a>
+                                that we offer so we can cater your home to this style (please provide a blueprint) as
+                                well as any additional pictures of your furniture. (e.g airbnb listing or MLS listing).
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                This is a 3D floor model, hand made and designed by by our design team targeted towards
+                                airbnb hosts
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Revisions are limited to only errors by designer and if specifications are not exact
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                4K resolution
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Format will be given in PDF, JPG
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-btn-wrapper">
+                        <a href="#" class="btn green-btn" onclick="showOrderStep2()">Order now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="pricing-header d-flex justify-content-center set-bg"
+                     data-setbg="{% static 'img/pricing-bk.png' %}">
+                    <span class="header-pricing-title">Custom interior design 3D</span>
+                </div>
+                <div class="d-flex flex-column justify-content-between">
+                    <div class="pricing__item" onclick="showOrderStep2()">
+                        <img src="{% static 'img/floorplan-3.png' %}" alt="">
+                        <h3 class="price ta-left">${{prices.2.price}}</h3>
+                        <h4 class="header-h4">Features</h4>
+                        <ul>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Fully customizable based on your blueprint and pictures that were provided
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                The style of the guestmapp will be tailored to textures, colours and designs specific to
+                                the pictures provided
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Targeted for real estate agents.
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Revisions are limited to only errors by designer and if specifications are not exact
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Photo-realistic
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                4K resolution
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Format will be given in PDF, JPG
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-btn-wrapper">
+                        <a href="#" class="btn green-btn" onclick="showOrderStep2()">Order now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="pricing-header d-flex justify-content-center set-bg"
+                     data-setbg="{% static 'img/pricing-bk.png' %}">
+                    <span class="header-pricing-title">Custom 3D mobile home</span>
+                </div>
+                <div class="d-flex flex-column justify-content-between">
+                    <div class="pricing__item" onclick="showOrderStep2()">
+                        <img src="{% static 'img/floorplan-4.png' %}" alt="">
+                        <h3 class="price ta-left">${{prices.3.price}}</h3>
+                        <h4 class="header-h4">Features</h4>
+                        <ul>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Fully customizable, based on your blueprint (please provide your own blueprint as well
+                                as additional pictures to display furniture (e.g., mobile home listing)
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                This is a 3d floor plan, made by a high quality custom made software designed to provide
+                                a realistic interior design of your mobile home
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Mobile-home rental businesses
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Revisions are limited to only errors by designer and if specifications are not exact.
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Photo-realistic
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                4K resolution
+                            </li>
+                            <li style="list-style-image: url('{% static '/img/list-check.png' %}');">
+                                Format will be given in PDF, JPG
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-btn-wrapper">
+                        <a href="#" class="btn green-btn" onclick="showOrderStep2()">Order now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Pricing Section End -->
+{% endblock main %}
+
+{% block script %}
+<div class="modal" id="modal_form_order_step1" role="dialog" data-keyboard="false" data-backdrop="static"
+     style="display: none;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <form action="#" id="form" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="form-body">
+                            <div class="form-group">
+                                <!-- <span class="fa fa-arrow-left back-btn" onclick="doLogin()"></span> -->
+                                <label class="modal-title">Order</label>
+                                <p class="paragraph mt-30 ta-left">
+                                    <span style="font-weight: bold">Step 1 from 2</span>
+                                    Create an account
+                                </p>
+                                <div class="modal-input-group mt-20">
+                                    <label class="modal-input-label">Name</label>
+                                    <input name="title" placeholder="name" class="form-control" type="text">
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Surname</label>
+                                    <input name="title" placeholder="surname" class="form-control" type="text">
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Your email</label>
+                                    <input name="title" placeholder="Email" class="form-control" type="text">
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Your password</label>
+                                    <input name="title" placeholder="password" class="form-control" type="text">
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Confirm password</label>
+                                    <input name="title" placeholder="password" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn green-btn mt-40" data-dismiss="modal" aria-label="Close"
+                                onclick="doOrderStep2()"><span aria-hidden="true">Next</span></button>
+                    </form>
+                    <p class="mt-15">If you already have an account, please <a href="#" onclick="doLogin()">login</a>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <p>Or log in with</p>
+                    <div class="mt-15">
+                        <a class="mr-10" onclick=""><img src="{% static 'img/google.png' %}"></a>
+                        <a class="ml-10" onclick=""><img src="{% static 'img/facebook.png' %}"></a>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</div>
+
+<div class="modal" id="modal_form_order_step2" role="dialog" data-keyboard="false" data-backdrop="static"
+     style="display: none;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <form action="#" id="paymentForm" class="form-horizontal needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="form-body">
+                            <div class="form-group">
+                                <span class="fa fa-arrow-left back-btn" onclick="backOrderStep1()"></span>
+                                <label class="modal-title ml-20">Order</label>
+                                <p class="paragraph mt-30 ta-left">
+                                    <span style="font-weight: bold">Step 2 from 2.&nbsp;</span>
+                                    Create a new payment
+                                </p>
+                                <div class="row">
+                                    <div class="col-lg-9 col-md-9 col-sm-8 col-8">
+                                        <div class="modal-input-group">
+                                            <label class="modal-input-label">Product</label>
+                                            <select name="product" class="form-control" id="product_type">
+                                                <option value="0">Blueprint</option>
+                                                <option value="1">Theme 3D staging</option>
+                                                <option value="2">Custom interior design 3D</option>
+                                                <option value="3">Custom 3D mobile home</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-4 col-4">
+                                        <div class="modal-input-group">
+                                            <label class="modal-input-label">Floors</label> 
+                                            <input name="tires" class="form-control" type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="guestmapp_style" style="display: none;">
+                                    <label class="modal-input-label">Please select Guestmapp style</label>
+                                    <div class="row mt-5">
+                                        <div class="col-lg-10 col-md-10 col-sm-10 col-10">
+                                            <div class="modal-input-group">
+                                                <select name="product" class="form-control">
+                                                    <option>Contemporary</option>
+                                                    <option>Cozy/Rustic</option>
+                                                    <option>Light and Spacious Exploration</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-2">
+                                            <img src="{% static 'img/success-alert.png' %}">
+                                        </div>
+                                    </div>
+                                </div>
+                                {% comment %}
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Currency</label>
+                                    <select name="product" class="form-control">
+                                        <option>CAD - Canadian dollars</option>
+                                        <option>USD - United State's dollars</option>
+                                    </select>
+                                </div>        {% endcomment %}
+                                <div class="modal-input-group d-flex justify-content-between mt-40">
+                                    <label class="modal-input-label">Payment amount</label>
+                                    <div class="currency-wrapper">
+                                        <span class="currency-unit">$</span>
+                                        <h3 class="price"></h3>
+                                    </div>
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Name of card</label>
+                                    <div class="mastercard">
+                                        <input id="name_on_card" name="cardname" placeholder="Name Surname" class="form-control" type="text">
+                                        <img src="{% static 'img/mastercard.png' %}">
+                                    </div>
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Card number</label>
+                                    <input id= "card_number" name="cardnumber" placeholder="0000 0000 0000 0000" class="form-control" type="text">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-6">
+                                        <div class="modal-input-group">
+                                            <label class="modal-input-label">Expiry date</label> 
+                                            <input id= "expiry_date" name="expiry_date" maxlength="5" placeholder="MM/YY" class="form-control" type="text">
+                                        </div>                                    
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-6">
+                                        <div class="modal-input-group">
+                                            <label class="modal-input-label">Security code</label> 
+                                            <input id="cvv" name="cvv" maxlength="3" placeholder="123" class="form-control" type="text">
+                                        </div>   
+                                    </div>
+                                </div>
+                                <div class="alert alert-danger mt-20" id="alert-div">
+                                    <button id="msg-btn" type="button" class="close">&times;</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn green-btn mt-40" disabled><span class="loader"></span>Pay only&nbsp;<span
+                            class="totalPrice">0.0</span>&nbsp;USD
+                    </button>
+                    {% comment %} <a class="btn green-btn" onclick="doPay()">Pay only $99 USD</a> {% endcomment %}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</div>
+
+<div class="modal" id="modal_form_order_complete" role="dialog" data-keyboard="false" data-backdrop="static"
+     style="display: none;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <div class="success-header ta-center">
+                        <img src="{% static 'img/success-check.png' %}">
+                    </div>
+                    <div class="success-content">
+                        <h3 class="price"></h3>
+                        <h4>Your payment is complete</h4>
+                    </div>
+                    <p class="email-paragraph">Check your email address for proff of purchase</p>
+                    <p class="suggest-paragraph">To start scanning tiers, please use the Guest App on your mobile
+                        device.</p>
+                    <div class="app-link">
+                        <img src="{% static 'img/google-store.png' %}">
+                        <img src="{% static 'img/apple-store.png' %}">
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</div>
+
+<script src="{% static 'js/jquery.creditCardValidator.js' %}"></script>
+<script src="{% static 'js/order.js' %}"></script>
+
+<script>
+    $('#modal_form_order_step2 #product_type').on('change', function () {
+        var product_type = $(this).find("option:selected").val();
+        if (product_type === "1") {
+            $('#modal_form_order_step2 #guestmapp_style').show();
+        } else {
+            $('#modal_form_order_step2 #guestmapp_style').hide();
+        }
+        calc();
+    });
+
+function calc(){
+    var product_type = $("#modal_form_order_step2 #product_type").find("option:selected").val();
+    var price = 0, discount = 0;
+    var tires = $("#modal_form_order_step2 input[name='tires']").val();
+    if(tires <= 0 || tires > 1000){
+        tires = 1; 
+        $("#modal_form_order_step2 input[name='tires']").val(tires);
+    }
+    switch(product_type){
+        case "0":
+            price = {{prices.0.price}};
+            break;
+        case "1":
+            price = {{prices.1.price}};
+            break;
+        case "2":
+            price = {{prices.2.price}};
+            if({{isFirstUser}} == 1){
+                discount = -20;
+            }
+            break;
+        case "3":
+            price = {{prices.3.price}};
+            break;
+        }
+        var totalPrice = (price * tires) + discount;
+        $("#modal_form_order_step2 button[type='submit']").removeAttr('disabled');
+        $('#modal_form_order_step2 .currency-unit').addClass('active');
+        $('#modal_form_order_step2 .price').text(Number((totalPrice).toFixed(2)));
+        $('#modal_form_order_step2 .totalPrice').text(Number((totalPrice).toFixed(2)));
+    }
+
+    $("#modal_form_order_step2 input[name='tires']").on('input', function () {
+        calc();
+    });
+</script>
+{% endblock script %}

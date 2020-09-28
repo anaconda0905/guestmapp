@@ -1,0 +1,124 @@
+.btn {
+	font-family: Roboto Slab;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 24px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	color: #414F5F;
+}
+.gray-btn {
+	background-color: $color-gray-extra-light;
+	color: $color-white;
+	// border: solid 2px;
+	border-radius: 5;
+	&:hover{
+		background-color: $color-white;
+		color: $color-gray-extra-light;
+	}
+}
+           
+.green-btn {
+	background-color: $color-green-light;
+	color: #414F5F;
+	border: solid 2px $color-green-light;
+	border-radius: 5;
+	width: 100%;
+	&:hover{
+		background-color: #EEF1F3;
+		color: $color-green-dark;
+		border: solid 2px $color-green-dark;
+	}
+}
+
+.green-reverse-btn {
+	background-color: transparent;
+	color: #324157;
+	border: solid 2px $color-green-dark;
+	border-radius: 5;
+	&:hover{
+		background-color: $color-green-light;
+		color: #324157;
+		border: solid 2px $color-green-light;
+	}	
+}
+
+.custom-table-striped tbody tr:nth-of-type(odd) {
+    background-color: #dde4e9;
+}
+
+.custom-table-striped tbody tr:nth-of-type(even) {
+    background-color: #eef1f3;
+}
+
+.custom-table{
+	width: 100%;
+	th{
+		@include base-h4;
+		background-color: $color-white;
+		padding-bottom: 20px;
+		font-weight: bold;
+	}
+
+	td, th{
+		padding-left: 15px;
+	    padding-right: 15px;
+	    padding-top: 10px;
+	    padding-bottom: 10px;
+	    vertical-align: top;
+	    border: none;
+	}
+
+	.custom-table-header{
+		@media only screen and (max-width: 767px) {
+			display: none;
+		}
+	}
+
+	.custom-table-content{
+		display: flex;
+		
+		img{
+			width: 30px;
+			height: 25px;
+		}
+	}
+
+	.download-plan{
+		text-align: center;
+		border-left: solid 2px $color-white;
+		img{
+			width: 30px;
+			height: 25px;
+		}
+		a{
+			margin-left: 5px;
+			text-decoration: underline;
+			@media only screen and (max-width: 767px) {
+				display: none;
+			}
+		}
+		@media only screen and (max-width: 767px) {
+			width: 15%;
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+
+	
+} 
+
+.upload-btn{
+	margin: 30px auto;
+	@media only screen and (max-width: 420px) {
+		margin-bottom: 0px;
+		width: 110px;
+		height: 110px;
+	}
+	&:hover{
+		cursor: pointer;
+	}
+}

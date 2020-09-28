@@ -1,0 +1,485 @@
+{% extends 'baseaccount.html' %}
+
+{% load static %}
+
+
+{% block main %}
+
+<!-- Hero Section Begin -->
+<section class="pricing-hero-section" style="background-color: #FFFFFF;">
+    <!-- <div class="hero__slider owl-carousel"> -->
+    <div class="set-bg" data-setbg="{% static 'img/hero/pwd-bk.png' %}">
+        <div class="container">
+            <div class="header__logo">
+                <div class="row">
+                    <a href="{% url 'home' %}"><img class="site-logo" src="{% static 'img/logo.png' %}" alt=""></a>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <img src="{% static 'img/menu.png' %}">
+            </div>
+            <div class="user__login">
+                <img src="{% static 'img/user-avatar.png' %}" onclick="doLogin()">
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+</section>
+<!-- Hero Section End -->
+
+<section class="progress-guestmapp-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-md-5">
+                <h1 class="header-h4 ta-center" style="color: #679724;">Hello {{user}}</h4>
+                    <h1 class="section-title mt-40">Your Prepaid Guestmapp</h1>
+            </div>
+            <div class="col-lg-12 col-md-12 mt-30">
+                <div class="accordion" id="accordionExample">
+                    {% if order_exist == True %}
+                    {% for order in orders %}
+                    {% if order.status == 0 %}
+                    <div class="card" type="{{order.product_type}}" orderid="{{order.id}}">
+                        <div class="card-header" id="heading-{{order.id}}">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                    data-target="#collapse-{{order.id}}" aria-expanded="false"
+                                    aria-controls="collapse-{{order.id}}">
+                                <img src="/static/img/{{order.productImage}}.png" class="mr-10">{{ order.productTitle}}
+                            </button>
+                        </div>
+                        <div id="collapse-{{order.id}}" class="collapse" aria-labelledby="heading-{{order.id}}"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                <h1 class="section-title mt-30">Upload blueprint</h1>
+                                <h4 class="header-h4-normal mt-20 ta-center" style="color: #414F5F;">If you have your
+                                    Blueprint please upload it</h4>
+                                <input type="hidden" class="oderId" value="{{order.id}}">
+                                <div class="ta-center">
+                                    <img src="{% static 'img/upload-blueprint.png' %}" class="upload-btn">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    <p class="paragraph ta-center">There are no prepaid guestmapps!</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-5">
+                <a href="{% url 'planprices' %}" class="btn green-btn mt-30">Order new project</a>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <p class="paragraph mt-30">To scan tiers, please use the <a href="#" class="underline">GuestMapp App</a>&nbsp;on
+                    your mobile device. If you did not install the app yet, you can get it for free on the <a href="#"
+                                                                                                              class="underline">App
+                        Store</a>&nbsp;for iOS devices or on the <a href="#" class="underline">Play Market</a> for
+                    Android ones </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="section-title mt-37">Guestmapps in progress</h1>
+            </div>
+        </div>
+        <div class="row mt-40">
+            {% if order_progress == True %}
+                <div class="progressguestmapp__slider owl-carousel">
+                    {% for order in orders %}
+                        {% if order.status == 0 or order.status == 1 %}
+                            {% if order.getImageUrl is not None %}
+                            <div class="col-lg-4">
+                                <div class="progress__item">
+                                    <img src="{{order.getImageUrl}}" alt="">
+                                    <div class="item-content">
+                                        {% if order.product_type == 0 %}
+                                        <img src="{% static 'img/inwork.png' %}" alt="">
+                                        {% elif order.product_type == 1 or 2 or 3 %}
+                                        <img src="{% static 'img/custom3d-summary.png' %}" alt="">
+                                        {% endif %}
+                                        <h4>Order Number : {{order.id}}</h4>
+                                        {% if order.status == 0 %}
+                                        <h5><span>Status:</span> Waiting for photos</h4>
+                                            {% elif order.status == 1 %}
+                                            <h5><span>Status:</span> In work</h4>
+                                                {% endif %}
+                                                <a href="" class="btn green-reverse-btn">Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% else %}
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h1 class="header-h4 ta-center" style="color: #679724;">There aren't any guestmapps in progress.</h1>
+                    </div>
+                {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="complete-guestmapp-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <h1 class="section-title">Recently completed guestmapps</h1>
+            </div>
+        </div>
+        <div class="row mt-40">
+            {% if order_completed == True %}
+            <div class="completedguestmapp__slider owl-carousel">
+                {% for order in orders %}
+                {% if order.status == 3 %}
+                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                    <div class="completed__item">
+                        <img src="{{order.getImageUrl}}" alt="">
+                        <div class="item-content">
+                            <h4>{{order.getProjectTitle}} - #{{order.id}}</h4>
+                            <input type="hidden" class="proj-title" value="{{order.getProjectTitle}}"/>
+                            <input type="hidden" class="order-id" value="{{order.id}}"/>
+                            <a href="#"><img src="{% static 'img/download.png' %}">Download</a>
+                            <a href="#" class="adjustProjBtn">Make adjustments</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h1 class="header-h4 ta-center" style="color: #679724;">There aren't any completed guestmapps.</h1>
+                </div>
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div class="all-guestmapps" style="z-index: 9999;">
+                        <a href="{% url 'ownguestmapp' %}">View all my Guestmapps</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+{% endblock main %}
+
+{% block script %}
+{% comment %}
+<script src="{% static 'js/upload.js' %}"></script> {% endcomment %}
+
+<div class="modal" id="modal_form_blueprint" data-keyboard="false" data-backdrop="static" role="dialog">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <form action="#" id="blueprint-form" enctype="multipart/form-data" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="modal-title">Uploading scan</label>
+                                <input type="hidden" name="rawImageUrl" value=""/>
+                                <input type="hidden" name="orderid" value=""/>
+
+                                <div class="ta-center mt-30">
+                                    <div class="blueprint-drag" for="fileupload">
+                                        <img src="{% static 'img/upload.png' %}">
+                                        <p>Drag and drop your photo</p>
+                                        <input id="fileupload" type="file" name="file" style="display: none;"
+                                               data-url="{% url 'progress_bar_upload' %}"
+                                               data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+                                    </div>
+                                    <label for="fileupload" class="mt-20"><span class="lbl-from">Upload a blueprint from computer</span></label>
+                                    <div id="upload_filename"></div>
+                                </div>
+                                <div class="modal-input-group mt-36">
+                                    <label class="modal-input-label">Or upload from Airbnb</label>
+                                    <input id="airbnb" name="airbnb" placeholder="Link to your listing"
+                                           class="form-control" type="text">
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Or upload from Google Drive</label>
+                                    <input id="google_drive" name="google_drive" placeholder="Link" class="form-control"
+                                           type="text">
+                                </div>
+                            </div>
+                            <div class="alert alert-danger" id="alert-div">
+                                <button id="msg-btn" type="button" class="close">&times;</button>
+                            </div>
+                        </div>
+                        <button id="blueprint-upload-btn" class="btn green-btn mt-40">Upload</button>
+                        {% comment %} <a href="#" class="btn green-btn" onclick="show_blueprint_submitted()">Upload</a>
+                        {% endcomment %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modal_form_blueprint_submitted" data-keyboard="false" data-backdrop="static" role="dialog"
+     style="display: none;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <form action="#" id="blueprint-form-submitted" class="form-horizontal">
+                        {% csrf_token %}
+                        <label class="modal-title">Uploading scan</label>
+
+                        <div class="ta-center">
+                            <img src="{% static 'img/success-check.png' %}">
+                            <p class="mt-20">Blueprint uploaded</p>
+                        </div>
+                        <div>
+                            <p class="blueprint-title ta-left">Save blueprint</p>
+                            <input id="productTitle" name="productTitle" placeholder="Project title"
+                                   class="form-control mt-5" type="text">
+                            <a href="#" id="productTitleBtn" class="btn green-btn mt-30">Next</a>
+                            {% comment %} <a href="#" class="btn green-btn mt-30"
+                                             onclick="show_upload_photos()">Next</a> {% endcomment %}
+                        </div>
+
+                        <div class="alert alert-danger" id="alert-div">
+                            <button id="msg-btn" type="button" class="close">&times;</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modal_form_photo_description" data-keyboard="false" data-backdrop="static" role="dialog"
+     style="display: none;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <form action="#" id="blueprint-form-submitted" class="form-horizontal">
+                        {% csrf_token %}
+                        <span class="fa fa-arrow-left back-btn" onclick="doLogin()"></span>
+                        <input type="hidden" name="scanDetailId" value=""/>
+                        <img src="">
+                        <div class="description-wrapper">
+                            <p class="blueprint-title ta-center">Photo description</p>
+                            <input id="productDetailTitle" name="productDetailTitle" placeholder="for example kitchen"
+                                   class="form-control mt-5" type="text">
+                            <a href="#" id="photoDescBtn" class="btn green-btn mt-30">Upload</a>
+                            {% comment %} <a href="#" class="btn green-btn mt-30"
+                                             onclick="show_upload_photos()">Next</a> {% endcomment %}
+                        </div>
+
+                        <div class="alert alert-danger" id="alert-div">
+                            <button id="msg-btn" type="button" class="close">&times;</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modal_form_scan_submitted" data-keyboard="false" data-backdrop="static" role="dialog"
+     style="display: none;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <form action="#" id="scan-submitted" class="form-horizontal">
+                        {% csrf_token %}
+                        <input type="hidden" name="scanDetailId" value=""/>
+                        <img class="preview-img" src="{% static 'img/kitchen.png' %}">
+                        <div class="message-wrapper">
+                            <p class="proj-title ta-center">Project title</p>
+                            <div class="ta-center">
+                                <img class="success-img" src="{% static 'img/success-check.png' %}">
+                                <p class="success-msg mt-10">Scan submitted</p>
+                            </div>
+                            <p class="success-summary">Your Guestmapp will be done within 3-5 business days of your
+                                order date</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modal_form_project_completed" data-keyboard="false" data-backdrop="static" role="dialog"
+     style="display: none;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <form action="#" id="blueprint-form-submitted" class="form-horizontal">
+                        {% csrf_token %}
+                        <input type="hidden" name="scanDetailId" value=""/>
+                        <input type="hidden" name="orderId" value=""/>
+                        <img class="preview-img" src="{% static 'img/kitchen.png' %}">
+                        <div class="project-wrapper">
+                            <p class="proj-title ta-center">Project title</p>
+                            <div class="ta-center">
+                                <p class="success-msg">Your GuestMapp is done!</p>
+                                <a href="#" class="btn green-reverse-btn mt-10">View GuestMapp</a>
+                            </div>
+                            <div class="ta-center">
+                                <p class="contact-summary ta-center">if the project needs edits or you have questions or
+                                    inquires, please contact us</p>
+                                <a href="#" class="btn green-reverse-btn mt-10">Contact us</a>
+                            </div>
+                            <a href="#" id="orderConfirmed" class="btn green-btn">Confirm</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modal_form_upload_photos" data-keyboard="false" data-backdrop="static" role="dialog"
+     style="display: none;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    {% csrf_token %}
+                    <img class="proj-scan-img" src="{% static 'img/floorplan-2.png' %}">
+                    <input type="hidden" name="proj-scan-id" value=""/>
+                    <div class="projects-wrapper">
+                        <h4 class="proj-title ta-center">Project title</h4>
+                        <p class="proj-photo-summary">waiting for photos</p>
+                        <p class="proj-summary">Please upload photos to continue</p>
+                        <a href="#" id="show_photoslist_btn" class="btn green-btn mt-30"">Upload photos</a>
+                        {% comment %} <a href="#" id="show_photoslist_btn" class="btn green-btn mt-30"
+                                         onclick="show_photos_list()">Upload photos</a> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modal_form_photos_add" data-keyboard="false" data-backdrop="static" role="dialog">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <form action="#" id="blueprint-form" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="form-body">
+                            <div class="form-group">
+                                <span class="fa fa-arrow-left back-btn" onclick="doLogin()"></span>
+                                <label class="modal-title ml-20">Add Photos</label>
+                                <p class="paragraph mt-37">To create photo realistic renderings,<br/>attach pictures of
+                                    your home</p>
+                                <p class="sub-paragraph">
+                                    Please provide a minimum of 2 pictures per room taken from different perspectives.
+                                    Ensure all funiture is visible.
+                                </p>
+                                <input type="hidden" name="rawImageUrl" value=""/>
+                                <div class="ta-center mt-30">
+                                    <div class="photos-drag" for="detailfileupload">
+                                        <img src="{% static 'img/upload.png' %}">
+                                        <p>Drag and drop your photo</p>
+                                        <input id="detailfileupload" type="file" name="file" style="display: none;"
+                                               data-url="{% url 'progress_bar_upload' %}"
+                                               data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+                                    </div>
+                                    <div id="upload_detailfilename"></div>
+                                    <label for="detailfileupload" class="mt-20"><span class="lbl-from">Upload a blueprint from computer</span></label>
+                                    <div id="status1"></div>
+                                </div>
+                                <div class="modal-input-group mt-36">
+                                    <label class="modal-input-label">Or upload from Airbnb</label>
+                                    <input id="airbnb" name="airbnb" placeholder="Link to your listing"
+                                           class="form-control" type="text">
+                                </div>
+                                <div class="modal-input-group">
+                                    <label class="modal-input-label">Or upload from Google Drive</label>
+                                    <input id="google_drive" name="google_drive" placeholder="Link" class="form-control"
+                                           type="text">
+                                </div>
+                            </div>
+                            <div class="alert alert-danger" id="alert-div">
+                                <button id="msg-btn" type="button" class="close">&times;</button>
+                            </div>
+                        </div>
+                        {% comment %}
+                        <button type="submit" id="blueprint-upload-btn" class="btn green-btn mt-40">Upload</button>
+                        {% endcomment %}
+                        <a href="#" id="uploadDetailBtn" class="btn green-btn">Upload</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modal_form_photos_list" data-keyboard="false" data-backdrop="static" role="dialog">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body form">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <form action="#" id="photos-list-form" class="form-horizontal">
+                        {% csrf_token %}
+                        <label class="modal-title">Add photos</label>
+                        <ul class="photos-wrapper row mt-30">
+                            {% comment %}
+                            <li class="photo-item col-lg-6 col-md-6 col-sm-6 col-6">
+                                <img class="photo" src="{% static 'img/kitchen.png' %}">
+                                <div class="photo-action">
+                                    <span class="title">Kitchen</span>
+                                    <img class="btn-remove" src="{% static 'img/garbage.png' %}">
+                                </div>
+                            </li>
+                            {% endcomment %}
+                        </ul>
+                        <p class="summary">Please provide a minimum of 2 pictures per room taken from different
+                            perspectives. Ensure all furniture is visible.</p>
+                        <!-- <button type="submit" id="blueprint-upload-btn" class="btn green-btn mt-40">Upload</button> -->
+                        <a href="#" class="btn green-reverse-btn" onclick="show_photos_add()">Add one more photo</a>
+                        <a href="#" class="btn green-btn mt-30" id="ProjectCompletedBtn">Submit</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
+<script src="{% static 'js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
+<script src="{% static 'js/jquery-file-upload/jquery.fileupload.js' %}"></script>
+<script src="{% static 'js/upload/progress-bar-upload.js' %}"></script>
+<script src="{% static 'js/upload/upload.js' %}"></script>
+
+{% endblock script %}

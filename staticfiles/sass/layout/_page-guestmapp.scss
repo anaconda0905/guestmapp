@@ -1,0 +1,47 @@
+.progress-guestmapp-section{
+	background-color: $color-white;
+
+	.row .col-lg-5, .row.col-md-5 {
+		margin: 0 auto;
+	}
+
+	.card-header {
+		padding: 0px;
+		.btn {
+			justify-content: left;
+		}
+	}
+}
+
+.own-guestmapp-section{
+	.row .col-lg-5, .row.col-md-5 {
+		margin: 0 auto;
+	}
+	.all-guestmapps{
+		margin-right: 0;
+	    margin-left: auto;
+	    a{
+	    	text-decoration: underline;
+	    }
+	}
+}
+
+.complete-guestmapp-section{
+	background-color: #EEF1F3;
+	padding-top: 50px;
+	padding-bottom: 140px;
+
+	.all-guestmapps{
+		z-index: 9999;
+		display: block;
+		margin-top: 30px;
+		text-align: right;
+		
+	    a{
+	    	text-decoration: underline;
+	    }
+	    @media only screen and (max-width: 420px) {
+	    	display: none;
+	    }
+	}
+}
