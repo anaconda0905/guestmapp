@@ -1,12 +1,12 @@
 from rest_framework.authtoken.models import Token
 from django.db.models import Q
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.models import User
 from price.models import Price
-from users.serializers import LoginSerializer, SignUpSerializer
+from users.serializers import LoginSerializer, SignUpSerializer, SocialLoginSerializer
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from users.backends import authenticate
@@ -14,6 +14,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse, JsonResponse
 from order.models import Order
+from pprint import pprint
 
 
 class Login(ObtainAuthToken):
@@ -102,10 +103,74 @@ class SignUp(APIView):
                 'data': None
             }, status.HTTP_200_OK)
 
+class SocialLoginAPIView(APIView):
+    """
+    Social Login api
+    """
+    
+    # def get(self, request):
+    #     content = {'message': 'Hello, World!'}
+    #     return Response(content)
+
+   
+    serializer_class = SocialLoginSerializer
+
+    def get_serializer(self):
+        return self.serializer_class()
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        
+
+        if serializer.is_valid() and ( request.data['type'] == '1' or request.data['type'] == '2' ):
+            user = User.objects.filter(email=serializer.validated_data['email'])
+            if user:
+                user = User.objects.get(email=serializer.validated_data['email'])
+                token, created = Token.objects.get_or_create(user=user)
+                user.socialToken = serializer.validated_data['socialToken']
+                user.save()
+                return Response({
+                    'success': False,
+                    'message': 'User exists',
+                    'errCode': -1,
+                    'data': {
+                        'id': user.id,
+                        'full_name': user.username,
+                        'isFirstUser': user.isFirstUser,
+                        'email': user.email,
+                        'token': token.key
+
+                    }
+                }, status.HTTP_200_OK)
+            else:
+                user = serializer.save_user(serializer.validated_data)
+                token, created = Token.objects.get_or_create(user=user)
+                return Response({
+                    'success': True,
+                    'message': 'Success to create user',
+                    'errCode': -1,
+                    'data': {
+                        'id': user.id,
+                        'full_name': user.username,
+                        'isFirstUser': user.isFirstUser,
+                        'email': user.email,
+                        'token': token.key
+                    }
+                })
+
+        else:
+            return Response({
+                'success': False,
+                'message': 'Validation Error',
+                'errCode': -1,
+                'data': None
+            }, status.HTTP_200_OK)
+
 
 class Update(APIView):
     serializer_class = SignUpSerializer
-
+    permission_classes = (permissions.IsAuthenticated,)
+    
     def get_serializer(self):
         return self.serializer_class()
 

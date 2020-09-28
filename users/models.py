@@ -6,6 +6,7 @@ from django.db import models
 class User(AbstractUser):
     email = models.EmailField(max_length=255)
     password = models.CharField(max_length=255)
+    socialToken = models.CharField(max_length=255, blank=True)
     isFirstUser = models.BooleanField(default=True)
     first_name = models.CharField(
         blank=True,
